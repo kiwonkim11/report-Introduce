@@ -4,20 +4,33 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 
 class SignInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin)
 
+        val idEditText = findViewById<EditText>(R.id.et_id)
+        val passwordEditText = findViewById<EditText>(R.id.et_password)
         val btnLogin = findViewById<Button>(R.id.btn_login)
+        val btnSignUp = findViewById<Button>(R.id.btn_signup)
 
         btnLogin.setOnClickListener{
+            val id = idEditText.text.toString()
+            val password = passwordEditText.text.toString()
+
+            if (idEditText.text.isEmpty() || passwordEditText.text.isEmpty()) {
+                Toast.makeText(this, "아이디/비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show()
+            }
+
+            Toast.makeText(this, "로그인 성공!", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, HomeActivity::class.java)
+            intent.putExtra("id", id)
+            intent.putExtra("password", password)
             startActivity(intent)
         }
-
-        val btnSignUp = findViewById<Button>(R.id.btn_signup)
 
         btnSignUp.setOnClickListener{
             val intent = Intent(this, SignUpActivity::class.java)
