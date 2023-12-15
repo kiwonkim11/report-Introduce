@@ -19,7 +19,6 @@ class SignInActivity : AppCompatActivity() {
 
         btnLogin.setOnClickListener{
             val id = idEditText.text.toString()
-            val password = passwordEditText.text.toString()
 
             if (idEditText.text.isEmpty() || passwordEditText.text.isEmpty()) {
                 Toast.makeText(this, "아이디/비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show()
@@ -30,7 +29,6 @@ class SignInActivity : AppCompatActivity() {
 
             val intent = Intent(this, HomeActivity::class.java)
             intent.putExtra("id", id)
-            intent.putExtra("password", password)
             startActivity(intent)
         }
 
