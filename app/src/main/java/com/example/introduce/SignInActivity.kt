@@ -1,13 +1,29 @@
 package com.example.introduce
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 
 class SignInActivity : AppCompatActivity() {
+
+    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
+
+    private fun setResultSignUp() {
+        resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val idSignUp = result.data?.getStringExtra("id_signup") ?: ""
+                val passwordSignUp = result.data?.getStringExtra("password_signup") ?: ""
+                idEditText.setText(idSignUp)
+                passwordEditText.setText(passwordSignUp)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin)
