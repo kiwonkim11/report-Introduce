@@ -30,7 +30,8 @@ class SignUpActivity : AppCompatActivity() {
                 intent.putExtra("id_signup", idSignUp)
                 intent.putExtra("password_signup", passwordSignUp)
                 setResult(RESULT_OK, intent)
-                finish()
+
+                if (!isFinishing)finish()
             }
         }
     }
