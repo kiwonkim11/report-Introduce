@@ -36,7 +36,7 @@ class SignInActivity : AppCompatActivity() {
             val id = idEditText.text.toString()
 
             if (idEditText.text.isEmpty() || passwordEditText.text.isEmpty()) {
-                Toast.makeText(this, "아이디/비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.toast_msg_idpwerr), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 

@@ -22,7 +22,7 @@ class SignUpActivity : AppCompatActivity() {
             val passwordSignUp = passwordEditText.text.toString()
 
             if (nameEditText.text.isEmpty() || idEditText.text.isEmpty() || passwordEditText.text.isEmpty()) {
-                Toast.makeText(this, "입력되지 않은 정보가 있습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.toast_msg_checkinfo), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             else {
@@ -31,7 +31,7 @@ class SignUpActivity : AppCompatActivity() {
                 intent.putExtra("password_signup", passwordSignUp)
                 setResult(RESULT_OK, intent)
 
-                if (!isFinishing)finish()
+                if (!isFinishing) finish()
             }
         }
     }
