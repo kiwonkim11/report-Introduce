@@ -8,21 +8,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 
 class SignInActivity : AppCompatActivity() {
 
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
-
-    private fun setResultSignUp() {
-        resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val idSignUp = result.data?.getStringExtra("id_signup") ?: ""
-                val passwordSignUp = result.data?.getStringExtra("password_signup") ?: ""
-                idEditText.setText(idSignUp)
-                passwordEditText.setText(passwordSignUp)
-            }
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,11 +23,20 @@ class SignInActivity : AppCompatActivity() {
         val btnLogin = findViewById<Button>(R.id.btn_login)
         val btnSignUp = findViewById<Button>(R.id.btn_signup)
 
+        resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val idSignUp = it.data?.getStringExtra("id_signup") ?: ""
+                val passwordSignUp = it.data?.getStringExtra("password_signup") ?: ""
+                idEditText.setText(idSignUp)
+                passwordEditText.setText(passwordSignUp)
+                }
+            }
+
         btnLogin.setOnClickListener{
             val id = idEditText.text.toString()
 
             if (idEditText.text.isEmpty() || passwordEditText.text.isEmpty()) {
-                Toast.makeText(this, "아이디/비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.toast_msg_idpwerr), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -50,7 +49,7 @@ class SignInActivity : AppCompatActivity() {
 
         btnSignUp.setOnClickListener{
             val intent = Intent(this, SignUpActivity::class.java)
-            startActivity(intent)
+            resultLauncher.launch(intent)
         }
     }
 }
